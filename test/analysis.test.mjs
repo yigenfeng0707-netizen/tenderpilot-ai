@@ -8,6 +8,17 @@ test("browser module has no unsupported .mjs dependency", async () => {
   assert.doesNotMatch(source, /\.mjs/);
 });
 
+test("UI renders input-derived content with text nodes rather than innerHTML", async () => {
+  const source = await readFile(new URL("../app.js", import.meta.url), "utf8");
+  assert.doesNotMatch(source, /\.innerHTML\s*=/);
+  assert.match(source, /textContent/);
+});
+
+test("sample parser retains HTML-like input as plain requirement text", () => {
+  const requirements = analyzeRequirements("一、需提交 <img src=x onerror=alert(1)> 证明材料。");
+  assert.equal(requirements[0].requirement, "需提交 <img src=x onerror=alert(1)> 证明材料。");
+});
+
 test("extracts traceable requirements from the reproducible sample", () => {
   const requirements = analyzeRequirements(sampleRequirement);
   assert.ok(requirements.length >= 5);

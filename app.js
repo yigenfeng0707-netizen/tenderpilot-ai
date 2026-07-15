@@ -11,43 +11,123 @@ const taskList = document.querySelector("#task-list");
 const draftText = document.querySelector("#draft-text");
 const draftSources = document.querySelector("#draft-sources");
 
+let currentRequirements = [];
+let workspaceKey = "";
+
 function priorityClass(priority) {
   return `priority priority-${priority === "高" ? "high" : priority === "中" ? "medium" : "low"}`;
 }
 
-function render(requirements) {
+function createElement(tag, className, text) {
+  const element = document.createElement(tag);
+  if (className) element.className = className;
+  if (text !== undefined) element.textContent = text;
+  return element;
+}
+
+function keyFor(text) {
+  let hash = 5381;
+  for (const char of text) hash = (hash * 33) ^ char.charCodeAt(0);
+  return `tenderpilot-workspace-${hash >>> 0}`;
+}
+
+function loadState() {
+  try {
+    return JSON.parse(localStorage.getItem(workspaceKey)) || {};
+  } catch {
+    return {};
+  }
+}
+
+function saveState(state) {
+  try {
+    localStorage.setItem(workspaceKey, JSON.stringify(state));
+  } catch {
+    inputStatus.textContent = "当前浏览器无法保存协作状态，结果仍可在本页使用";
+  }
+}
+
+function updateState(update) {
+  const state = loadState();
+  update(state);
+  saveState(state);
+}
+
+function render() {
+  const state = loadState();
+  const requirements = currentRequirements.filter((item) => state.decisions?.[item.id] !== "ignored");
   const tasks = buildTasks(requirements);
   const draft = buildDraft(requirements);
 
   emptyState.hidden = true;
   resultContent.hidden = false;
   requirementCount.textContent = `${requirements.length} 项待跟进`;
-  requirementList.replaceChildren(...requirements.map((item) => {
-    const card = document.createElement("article");
-    card.className = "requirement-card";
-    card.innerHTML = `<div><p class="requirement-id">${item.id} · ${item.type}</p><h3>${item.requirement}</h3><p class="source">${item.source}</p></div><span class="${priorityClass(item.priority)}">${item.priority}优先级</span>`;
+  requirementList.replaceChildren(...currentRequirements.map((item) => {
+    const card = createElement("article", "requirement-card");
+    const details = createElement("div");
+    details.append(
+      createElement("p", "requirement-id", `${item.id} · ${item.type}`),
+      createElement("h3", "", item.requirement),
+      createElement("p", "source", item.source)
+    );
+    const actions = createElement("div", "requirement-actions");
+    const decision = state.decisions?.[item.id] || "candidate";
+    const decisionButton = createElement("button", "secondary compact", decision === "ignored" ? "恢复候选" : decision === "confirmed" ? "忽略候选" : "确认候选");
+    decisionButton.type = "button";
+    decisionButton.addEventListener("click", () => {
+      updateState((next) => {
+        next.decisions ||= {};
+        next.decisions[item.id] = decision === "ignored" ? "candidate" : decision === "confirmed" ? "ignored" : "confirmed";
+      });
+      render();
+    });
+    actions.append(createElement("span", priorityClass(item.priority), `${item.priority}优先级`), decisionButton);
+    card.classList.toggle("is-ignored", decision === "ignored");
+    card.append(details, actions);
     return card;
   }));
 
   evidenceBody.replaceChildren(...requirements.map((item) => {
     const row = document.createElement("tr");
-    row.innerHTML = `<td><strong>${item.id}</strong><span>${item.type}</span></td><td>${item.evidence}</td><td>${item.owner}</td><td><select aria-label="${item.id} 状态"><option>待补充</option><option>核验中</option><option>已就绪</option></select></td>`;
+    const requirementCell = document.createElement("td");
+    requirementCell.append(createElement("strong", "", item.id), createElement("span", "", item.type));
+    const evidenceCell = createElement("td", "", item.evidence);
+    const ownerCell = createElement("td", "", item.owner);
+    const statusCell = document.createElement("td");
+    const select = document.createElement("select");
+    select.setAttribute("aria-label", `${item.id} 状态`);
+    ["待补充", "核验中", "已就绪"].forEach((status) => select.append(createElement("option", "", status)));
+    select.value = state.evidence?.[item.id] || item.status;
+    select.addEventListener("change", () => updateState((next) => {
+      next.evidence ||= {};
+      next.evidence[item.id] = select.value;
+    }));
+    statusCell.append(select);
+    row.append(requirementCell, evidenceCell, ownerCell, statusCell);
     return row;
   }));
 
   taskList.replaceChildren(...tasks.map((task) => {
-    const item = document.createElement("label");
-    item.className = "task";
-    item.innerHTML = `<input type="checkbox" /><span><strong>${task.title}</strong><small>${task.detail}</small><em>${task.owner} · ${task.priority}优先级</em></span>`;
+    const item = createElement("label", "task");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = Boolean(state.tasks?.[task.id]);
+    checkbox.addEventListener("change", () => updateState((next) => {
+      next.tasks ||= {};
+      next.tasks[task.id] = checkbox.checked;
+    }));
+    const details = createElement("span");
+    details.append(
+      createElement("strong", "", task.title),
+      createElement("small", "", task.detail),
+      createElement("em", "", `${task.owner} · ${task.priority}优先级`)
+    );
+    item.append(checkbox, details);
     return item;
   }));
 
   draftText.textContent = draft.text;
-  draftSources.replaceChildren(...draft.sources.map((item) => {
-    const source = document.createElement("p");
-    source.textContent = `${item.id}：${item.source}`;
-    return source;
-  }));
+  draftSources.replaceChildren(...draft.sources.map((item) => createElement("p", "", `${item.id}：${item.source}`)));
 }
 
 document.querySelector("#load-sample").addEventListener("click", () => {
@@ -63,9 +143,10 @@ document.querySelector("#analyze").addEventListener("click", () => {
     input.focus();
     return;
   }
-  const requirements = analyzeRequirements(text);
-  render(requirements);
-  inputStatus.textContent = `已从输入中整理 ${requirements.length} 项待跟进要求`;
+  workspaceKey = keyFor(text);
+  currentRequirements = analyzeRequirements(text);
+  render();
+  inputStatus.textContent = `已从输入中整理 ${currentRequirements.length} 项候选要求；状态仅保存在当前浏览器`;
 });
 
 document.querySelector("#copy-draft").addEventListener("click", async (event) => {
