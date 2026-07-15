@@ -1,6 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { analyzeRequirements, buildDraft, buildTasks, sampleRequirement } from "../analysis.mjs";
+import { analyzeRequirements, buildDraft, buildTasks, sampleRequirement } from "../analysis.js";
+import { readFile } from "node:fs/promises";
+
+test("browser module has no unsupported .mjs dependency", async () => {
+  const source = await readFile(new URL("../analysis.js", import.meta.url), "utf8");
+  assert.doesNotMatch(source, /\.mjs/);
+});
 
 test("extracts traceable requirements from the reproducible sample", () => {
   const requirements = analyzeRequirements(sampleRequirement);

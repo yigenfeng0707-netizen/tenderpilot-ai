@@ -1,4 +1,4 @@
-import { analyzeRequirements, buildDraft, buildTasks, sampleRequirement } from "./analysis.mjs";
+import { analyzeRequirements, buildDraft, buildTasks, sampleRequirement } from "./analysis.js";
 
 const input = document.querySelector("#requirement-input");
 const inputStatus = document.querySelector("#input-status");
