@@ -11,6 +11,9 @@
 - 提交时间：`2026/7/15 22:41:59`
 - 刷新后投稿数量：`1`
 - 可见性：`is_public: 1`
+- 研习社创作手记（`blog_url`）：`https://www.modelscope.cn/learn/434949`（2026-07-26 门户 API 复核）
+- 小红书笔记（`xiaohongshu_note_url`）：门户提交值为 `https://www.xiaohongshu.com/explore/6a579b080000000022014c3c`；用户确认的可访问公开链（含 xsec）：`https://www.xiaohongshu.com/explore/6a579b080000000022014c3c?xsec_token=YAfpZNHX3MR06ldBOodeWLSqMpEaCMjc-PF2pTqaCwpk%3D&xsec_source=pc_creatormng`（稳定 ID `6a579b080000000022014c3c`；token 可能过期）
+- 额外内容激励（`extra_content_incentive`）：`1`（是；与用户确认的小红书公开链一致）
 
 ## 作品表单字段
 
@@ -29,6 +32,7 @@
 3. 当前页面要求的最小交付资产是：可运行魔搭创空间 Demo 和魔搭研习社创作手记。
 4. 页面提示：比赛期间建议优先采用“仅公开体验”的发布形式；赛后可调整为公开展示；所有获奖作品需全部公开。
 5. 官方赛程页说明：打榜阶段截至 `08.10`，要求提交可运行 Demo 与强相关创作手记；额外内容激励对应小红书作品相关创作手记。提交前必须重新核验日期、时间和时区。
+6. 2026-07-26 再次核验赛事门户「比赛日程」：报名 `07.15–08.10`、打榜创作 `07.15–08.10`、评审 `08.11–08.14`、获奖公示 `08.15`；页面仍未标明时区。详情见 `docs/delivery-notes.md`。
 
 ## 提交前机器校验
 

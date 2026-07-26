@@ -5,3 +5,5 @@ dist/
 .env.*
 !.env.example
 .gstack/
+demo-output/
+scripts/_tmp_*

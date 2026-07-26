@@ -64,5 +64,7 @@ npm test
 - 公开代码仓库：https://github.com/yigenfeng0707-netizen/tenderpilot-ai
 - 公开 ModelScope Studio：https://www.modelscope.cn/studios/gsym236998/tenderpilot-ai
 - 公开 Demo：https://gsym236998-tenderpilot-ai.ms.show/
+- 研习社创作手记：https://www.modelscope.cn/learn/434949
+- 小红书参赛心得：https://www.xiaohongshu.com/explore/6a579b080000000022014c3c?xsec_token=YAfpZNHX3MR06ldBOodeWLSqMpEaCMjc-PF2pTqaCwpk%3D&xsec_source=pc_creatormng（笔记 ID `6a579b080000000022014c3c`；`xsec_token` 可能过期）
 
 当前 Studio 已部署并验证主流程。发布后应继续以未登录浏览器完成样例、移动端、错误状态和控制台错误的在线冒烟测试。

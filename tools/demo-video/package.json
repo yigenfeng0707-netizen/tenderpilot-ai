@@ -1,0 +1,8 @@
+{
+  "name": "tenderpilot-demo-video",
+  "private": true,
+  "description": "Isolated Playwright install for demo-video-factory (dev-only).",
+  "devDependencies": {
+    "playwright": "^1.54.1"
+  }
+}
