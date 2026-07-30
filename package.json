@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node server.mjs",
     "test": "node --test",
-    "check": "node --check app.js && node --check analysis.js && node --check server.mjs"
+    "check": "node --check app.js && node --check analysis.js && node --check llm-core.js && node --check server.mjs && node --check llm-analyze.mjs"
   },
   "engines": {
     "node": ">=20"

@@ -1,4 +1,7 @@
 import { analyzeRequirements, buildDraft, buildTasks, sampleRequirement } from "./analysis.js";
+import { callOpenAICompatible, DEFAULT_LLM_BASE, DEFAULT_LLM_MODEL } from "./llm-core.js";
+
+const LLM_SESSION_KEY = "tenderpilot-llm-session";
 
 const input = document.querySelector("#requirement-input");
 const inputStatus = document.querySelector("#input-status");
@@ -10,9 +13,18 @@ const evidenceBody = document.querySelector("#evidence-body");
 const taskList = document.querySelector("#task-list");
 const draftText = document.querySelector("#draft-text");
 const draftSources = document.querySelector("#draft-sources");
+const modeBadge = document.querySelector("#mode-badge");
+const llmSettings = document.querySelector("#llm-settings");
+const llmBase = document.querySelector("#llm-base");
+const llmModel = document.querySelector("#llm-model");
+const llmKey = document.querySelector("#llm-key");
+const llmSettingsStatus = document.querySelector("#llm-settings-status");
+const toggleLlmSettings = document.querySelector("#toggle-llm-settings");
+const analyzeButton = document.querySelector("#analyze");
 
 let currentRequirements = [];
 let workspaceKey = "";
+let serverEnhancedReady = false;
 
 function priorityClass(priority) {
   return `priority priority-${priority === "高" ? "high" : priority === "中" ? "medium" : "low"}`;
@@ -51,6 +63,100 @@ function updateState(update) {
   const state = loadState();
   update(state);
   saveState(state);
+}
+
+function loadSessionLlm() {
+  try {
+    return JSON.parse(sessionStorage.getItem(LLM_SESSION_KEY) || "null");
+  } catch {
+    return null;
+  }
+}
+
+function saveSessionLlm(config) {
+  sessionStorage.setItem(LLM_SESSION_KEY, JSON.stringify(config));
+}
+
+function clearSessionLlm() {
+  sessionStorage.removeItem(LLM_SESSION_KEY);
+}
+
+function setModeBadge(mode, detail) {
+  const labels = {
+    rules: "模式：规则拆解（零 Key）",
+    enhanced_ready: "模式：增强就绪",
+    enhanced: "模式：增强拆解",
+    fallback: "模式：增强失败 · 已回退规则"
+  };
+  modeBadge.dataset.mode = mode;
+  modeBadge.textContent = detail ? `${labels[mode] || labels.rules} · ${detail}` : labels[mode] || labels.rules;
+}
+
+function refreshModeBadge() {
+  const session = loadSessionLlm();
+  if (session?.apiKey) {
+    setModeBadge("enhanced_ready", "会话 Key");
+    return;
+  }
+  if (serverEnhancedReady) {
+    setModeBadge("enhanced_ready", "服务端");
+    return;
+  }
+  setModeBadge("rules");
+}
+
+async function probeServerHealth() {
+  try {
+    const response = await fetch("/api/health", { method: "GET", cache: "no-store" });
+    if (!response.ok) {
+      serverEnhancedReady = false;
+      refreshModeBadge();
+      return;
+    }
+    const health = await response.json();
+    serverEnhancedReady = Boolean(health?.enhanced?.demo_ready);
+    refreshModeBadge();
+  } catch {
+    serverEnhancedReady = false;
+    refreshModeBadge();
+  }
+}
+
+function fillSettingsForm() {
+  const session = loadSessionLlm();
+  llmBase.value = session?.baseUrl || DEFAULT_LLM_BASE;
+  llmModel.value = session?.model || DEFAULT_LLM_MODEL;
+  llmKey.value = session?.apiKey || "";
+}
+
+async function tryEnhancedAnalyze(text) {
+  const session = loadSessionLlm();
+  if (session?.apiKey) {
+    return {
+      requirements: await callOpenAICompatible({
+        baseUrl: session.baseUrl || DEFAULT_LLM_BASE,
+        apiKey: session.apiKey,
+        model: session.model || DEFAULT_LLM_MODEL,
+        text
+      }),
+      via: "session"
+    };
+  }
+
+  if (!serverEnhancedReady) {
+    return null;
+  }
+
+  const response = await fetch("/api/analyze-enhanced", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text })
+  });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok || !payload.ok) {
+    throw new Error(payload.error || `增强接口失败（HTTP ${response.status}）`);
+  }
+  return { requirements: payload.requirements, via: "server" };
 }
 
 function render() {
@@ -140,17 +246,69 @@ document.querySelector("#load-sample").addEventListener("click", () => {
   input.focus();
 });
 
-document.querySelector("#analyze").addEventListener("click", () => {
+toggleLlmSettings.addEventListener("click", () => {
+  const open = llmSettings.hidden;
+  llmSettings.hidden = !open;
+  toggleLlmSettings.setAttribute("aria-expanded", open ? "true" : "false");
+  if (open) fillSettingsForm();
+});
+
+document.querySelector("#save-llm-settings").addEventListener("click", () => {
+  const apiKey = llmKey.value.trim();
+  if (!apiKey) {
+    llmSettingsStatus.textContent = "请填写 API Key，或点清除以回到纯规则模式";
+    return;
+  }
+  saveSessionLlm({
+    baseUrl: llmBase.value.trim() || DEFAULT_LLM_BASE,
+    model: llmModel.value.trim() || DEFAULT_LLM_MODEL,
+    apiKey
+  });
+  llmSettingsStatus.textContent = "已保存到本会话（标签关闭即失效）";
+  refreshModeBadge();
+});
+
+document.querySelector("#clear-llm-settings").addEventListener("click", () => {
+  clearSessionLlm();
+  llmKey.value = "";
+  llmSettingsStatus.textContent = "已清除会话配置，使用规则拆解";
+  refreshModeBadge();
+});
+
+analyzeButton.addEventListener("click", async () => {
   const text = input.value.trim();
   if (text.length < 12) {
     inputStatus.textContent = "请至少输入一条完整、已脱敏的项目要求";
     input.focus();
     return;
   }
+
   workspaceKey = keyFor(text);
-  currentRequirements = analyzeRequirements(text);
-  render();
-  inputStatus.textContent = `已从输入中整理 ${currentRequirements.length} 项候选要求；状态仅保存在当前浏览器`;
+  analyzeButton.disabled = true;
+  inputStatus.textContent = "正在拆解…";
+
+  try {
+    const enhanced = await tryEnhancedAnalyze(text);
+    if (enhanced?.requirements?.length) {
+      currentRequirements = enhanced.requirements;
+      render();
+      setModeBadge("enhanced", enhanced.via === "session" ? "会话 Key" : "服务端");
+      inputStatus.textContent = `增强拆解完成：${currentRequirements.length} 项候选；状态仅保存在当前浏览器`;
+      return;
+    }
+
+    currentRequirements = analyzeRequirements(text);
+    render();
+    setModeBadge("rules");
+    inputStatus.textContent = `规则拆解完成：${currentRequirements.length} 项候选；状态仅保存在当前浏览器`;
+  } catch (error) {
+    currentRequirements = analyzeRequirements(text);
+    render();
+    setModeBadge("fallback", error.message.slice(0, 42));
+    inputStatus.textContent = `增强失败，已回退规则拆解（${currentRequirements.length} 项）：${error.message}`;
+  } finally {
+    analyzeButton.disabled = false;
+  }
 });
 
 document.querySelector("#copy-draft").addEventListener("click", async (event) => {
@@ -162,3 +320,7 @@ document.querySelector("#copy-draft").addEventListener("click", async (event) =>
     event.currentTarget.textContent = "复制失败";
   }
 });
+
+fillSettingsForm();
+refreshModeBadge();
+probeServerHealth();

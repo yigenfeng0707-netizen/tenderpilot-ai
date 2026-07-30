@@ -46,6 +46,84 @@ button, textarea, select { font: inherit; }
   padding-bottom: 18px;
 }
 
+.masthead-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  text-align: right;
+}
+
+.mode-badge {
+  margin: 0;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--green);
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  letter-spacing: .02em;
+  max-width: min(420px, 100%);
+}
+
+.mode-badge[data-mode="enhanced"],
+.mode-badge[data-mode="enhanced_ready"] {
+  border-color: var(--green);
+  background: color-mix(in srgb, var(--mint) 55%, white);
+}
+
+.mode-badge[data-mode="fallback"] {
+  border-color: var(--orange);
+  color: #8a3a16;
+  background: color-mix(in srgb, var(--orange) 18%, white);
+}
+
+.heading-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.llm-settings {
+  margin: 0 0 16px;
+  padding: 14px;
+  border: 1px dashed var(--line);
+  background: color-mix(in srgb, var(--panel) 80%, var(--mint));
+}
+
+.settings-lead { margin: 0 0 12px; }
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.settings-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.settings-grid input {
+  min-height: var(--touch);
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+}
+
+.settings-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
 .wordmark {
   color: var(--ink);
   font-family: "DM Mono", monospace;
@@ -495,6 +573,16 @@ footer a:hover { border-bottom-color: var(--green); }
     align-items: flex-start;
     padding-bottom: 14px;
   }
+
+  .masthead-meta {
+    align-items: flex-start;
+    text-align: left;
+    width: 100%;
+  }
+
+  .mode-badge { max-width: 100%; }
+
+  .settings-grid { grid-template-columns: 1fr; }
 
   .edition { width: 100%; }
 

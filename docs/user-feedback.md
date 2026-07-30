@@ -4,13 +4,24 @@
 
 机制状态（2026-07-30）：**已就绪，待回收**。本文件不含伪造样例数据；收到反馈后按下方表格如实登记。
 
+## 一键复制：邀请包
+
+```text
+【TenderPilot AI 试用邀请｜约 3 分钟】
+Demo：https://gsym236998-tenderpilot-ai.ms.show/
+步骤：打开链接 →「加载脱敏样例」→「拆解要求」→ 看证据矩阵 / 风险任务 / 草稿
+反馈（2–3 句即可）：https://github.com/yigenfeng0707-netizen/tenderpilot-ai/issues/new?template=user-feedback.md
+若愿意：在创空间或研习社文章下留一句真实评价 / 点个赞（不要用水军）
+说明：数据在浏览器本地；无 Key 也能完整走通。
+```
+
 ## 入口（择一即可）
 
 | 入口 | URL / 位置 | 说明 |
 | --- | --- | --- |
 | GitHub Issue（主入口） | https://github.com/yigenfeng0707-netizen/tenderpilot-ai/issues/new?template=user-feedback.md | 需登录 GitHub；模板见仓库 `.github/ISSUE_TEMPLATE/user-feedback.md` |
 | 快捷新建（无模板时） | https://github.com/yigenfeng0707-netizen/tenderpilot-ai/issues/new?title=%E7%94%A8%E6%88%B7%E5%8F%8D%E9%A6%88%EF%BC%9A | 标题预填「用户反馈：」 |
-| Demo 页页脚 | 公开 Demo / 本地 `index.html` 页脚「反馈」链接 | 指向上述 Issue；**创空间需重新部署后线上才可见** |
+| Demo 页页脚 | 公开 Demo / 本地 `index.html` 页脚「反馈」链接 | 指向上述 Issue |
 | 本仓库说明 | `README.md`「真实用户反馈」小节 | 邀请话术与流程 |
 
 无后端、无第三方表单依赖；与项目零运行时依赖风格一致。
@@ -35,6 +46,12 @@
 | （待填） |  |  | 是 / 否 |  |
 
 公开对外材料时：只引用已勾选「可公开」且保留原文出处的条目；不编造人数或评分。
+
+## Agent 归档流程
+
+1. `gh issue list -R yigenfeng0707-netizen/tenderpilot-ai --state all --limit 20`
+2. 将可公开原话脱敏写入上表；勾选 `TODO.md`「回收真实用户反馈」仅当 ≥1 条可核验。
+3. **不**代发小红书/创空间评论；有材料后再提醒作者是否更新研习社。
 
 ## 评审可核验材料建议
 

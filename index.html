@@ -13,7 +13,10 @@
     <main class="shell">
       <header class="masthead">
         <a class="wordmark" href="#top" aria-label="TenderPilot AI 首页">Tender<span>Pilot</span></a>
-        <p class="edition">AI + 运营 / 可复现 Demo</p>
+        <div class="masthead-meta">
+          <p class="edition">AI + 运营 / 证据优先协作台</p>
+          <p class="mode-badge" id="mode-badge" data-mode="rules" role="status">模式：规则拆解（零 Key）</p>
+        </div>
       </header>
 
       <section class="hero" id="top">
@@ -21,18 +24,34 @@
           <p class="eyebrow">运营材料，从“读不完”到“可协作”</p>
           <h1>把一份复杂要求，<br />变成每个人看得懂的行动图。</h1>
         </div>
-        <p class="hero-copy">TenderPilot AI 面向投标与项目申报运营。它从输入文本中提取候选要求，标记证据缺口与风险，生成本地协作任务，并为内容草稿保留可追溯依据。</p>
+        <p class="hero-copy">TenderPilot AI 面向投标与项目申报运营。默认以规则拆解保证零 Key 可演示；若配置增强模型，可在同一证据矩阵工作流上加深候选要求提取。草稿始终保留原文依据，禁止无证据承诺。</p>
       </section>
 
       <section class="notice" aria-label="使用边界">
-        <strong>演示模式</strong><span>数据仅在当前浏览器内处理，不上传服务器。此规则驱动原型仅提取纯文本候选要求，可能遗漏表格、附件、例外和非标准表述；请勿粘贴未脱敏资料，并以原文人工审核为准。</span>
+        <strong>演示边界</strong><span>数据默认在当前浏览器处理。无 Key 时走规则拆解；可选增强拆解需你自行配置模型接口（会话级，不写入服务器）。可能遗漏表格/附件/例外表述；请勿粘贴未脱敏资料，提交前必须以原文人工审核为准。</span>
       </section>
 
       <section class="workspace" aria-label="需求分析工作区">
         <div class="input-panel">
           <div class="section-heading">
             <div><p class="step">01 / 输入</p><h2>粘贴项目要求</h2></div>
-            <button class="secondary" id="load-sample" type="button">加载脱敏样例</button>
+            <div class="heading-actions">
+              <button class="secondary" id="toggle-llm-settings" type="button" aria-expanded="false" aria-controls="llm-settings">增强配置</button>
+              <button class="secondary" id="load-sample" type="button">加载脱敏样例</button>
+            </div>
+          </div>
+          <div class="llm-settings" id="llm-settings" hidden>
+            <p class="muted settings-lead">可选：本会话配置 OpenAI 兼容接口以启用增强拆解。密钥只保存在 sessionStorage，刷新标签页即清除；不会提交到 Git 或创空间仓库。</p>
+            <div class="settings-grid">
+              <label for="llm-base">API Base URL<input id="llm-base" type="url" autocomplete="off" placeholder="https://dashscope.aliyuncs.com/compatible-mode/v1" /></label>
+              <label for="llm-model">Model<input id="llm-model" type="text" autocomplete="off" placeholder="qwen-plus" /></label>
+              <label for="llm-key">API Key<input id="llm-key" type="password" autocomplete="off" placeholder="仅本会话，勿截图外传" /></label>
+            </div>
+            <div class="settings-actions">
+              <button class="secondary compact" id="save-llm-settings" type="button">保存到本会话</button>
+              <button class="secondary compact" id="clear-llm-settings" type="button">清除</button>
+              <span class="muted" id="llm-settings-status" role="status"></span>
+            </div>
           </div>
           <label for="requirement-input">项目要求或申报通知</label>
           <textarea id="requirement-input" rows="14" placeholder="粘贴已脱敏的要求文本。例如：提交截止时间、所需案例、方案内容、预算约束和评分项。"></textarea>
@@ -67,7 +86,7 @@
 
       <section class="method">
         <p class="eyebrow">为什么不是普通聊天框</p>
-        <div class="method-grid"><article><span>01</span><h3>证据优先</h3><p>每项要求保留对应原文，先暴露缺口，再讨论结论。</p></article><article><span>02</span><h3>协作可见</h3><p>把运营材料转化为负责人、优先级和状态都明确的任务。</p></article><article><span>03</span><h3>边界明确</h3><p>草稿只引用输入依据，未知内容保持“待确认”，不虚构事实。</p></article></div>
+        <div class="method-grid"><article><span>01</span><h3>证据优先</h3><p>每项要求保留对应原文，先暴露缺口，再讨论结论。</p></article><article><span>02</span><h3>双轨可演示</h3><p>规则路径零 Key 必通；增强路径可选，失败时诚实回退并提示。</p></article><article><span>03</span><h3>边界明确</h3><p>草稿只引用输入依据，未知内容保持“待确认”，不虚构事实。</p></article></div>
       </section>
     </main>
     <footer>
