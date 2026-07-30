@@ -7,4 +7,7 @@ dist/
 .gstack/
 demo-output/
 scripts/_tmp_*
+tools/demo-video/_tmp_*
 .tmp-inspect/
+_archive/**/tmp-inspect/
+_archive/**/demo-output/
