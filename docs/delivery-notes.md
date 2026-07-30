@@ -70,6 +70,7 @@
 - GitHub `main`：`ad49a3a`（含页脚反馈入口）
 - 操作：登录态 PUT 创空间自有 Git 的 `index.html` / `styles.css`，再 `POST .../openapi/.../deploy`；Status：Creating → **Running**
 - 核验：`https://gsym236998-tenderpilot-ai.ms.show/` 页脚含「反馈」及 GitHub Issue 模板链接
+- 晚间再部署：GitHub `c56c6b1`（三端响应式）；PUT `index.html` / `styles.css` / `app.js` / `analysis.js` → deploy → **Running**；核验 HTTP 200、页脚「反馈」、CSS 断点 640/1024
 
 ## 下一步（非自动执行）
 
