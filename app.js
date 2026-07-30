@@ -90,10 +90,14 @@ function render() {
   evidenceBody.replaceChildren(...requirements.map((item) => {
     const row = document.createElement("tr");
     const requirementCell = document.createElement("td");
+    requirementCell.dataset.label = "要求";
     requirementCell.append(createElement("strong", "", item.id), createElement("span", "", item.type));
     const evidenceCell = createElement("td", "", item.evidence);
+    evidenceCell.dataset.label = "当前证据";
     const ownerCell = createElement("td", "", item.owner);
+    ownerCell.dataset.label = "负责人";
     const statusCell = document.createElement("td");
+    statusCell.dataset.label = "状态";
     const select = document.createElement("select");
     select.setAttribute("aria-label", `${item.id} 状态`);
     ["待补充", "核验中", "已就绪"].forEach((status) => select.append(createElement("option", "", status)));
