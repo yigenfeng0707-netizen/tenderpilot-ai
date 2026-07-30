@@ -71,8 +71,13 @@
 - 操作：登录态 PUT 创空间自有 Git 的 `index.html` / `styles.css`，再 `POST .../openapi/.../deploy`；Status：Creating → **Running**
 - 核验：`https://gsym236998-tenderpilot-ai.ms.show/` 页脚含「反馈」及 GitHub Issue 模板链接
 - 晚间再部署：GitHub `c56c6b1`（三端响应式）；PUT `index.html` / `styles.css` / `app.js` / `analysis.js` → deploy → **Running**；核验 HTTP 200、页脚「反馈」、CSS 断点 640/1024
+- 冠军冲刺双轨：GitHub `da2c5a7`+；PUT `index.html` / `styles.css` / `app.js` / `analysis.js`（`llm-core` 已并入 `analysis.js`，因创空间 PUT 不能新建文件）→ deploy → **Running**；核验 mode-badge / llm-settings / callOpenAICompatible / 640+1024 断点。注意：GitHub push ≠ 创空间自动更新。
 
-## 下一步（非自动执行）
+## 影响力 / 反馈巡检（2026-07-30 夜）
+
+- GitHub Issues 用户反馈：**0** 条（`gh issue list` 空）
+- 反馈记录表：仍为待填；机制就绪，待作者邀人
+- 作品 API 字段本次自动化未解析出 visits/likes（留待作者在门户/Studio UI 目视）
 
 1. 邀请 2–3 名真实用户试用 Demo，并回收 Issue / 私聊反馈写入 `docs/user-feedback.md` 记录表。
 2. 若小红书 `xsec_token` 失效，用创作中心重新复制可访问 URL 回写本文件与 README。

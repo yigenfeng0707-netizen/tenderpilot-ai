@@ -1,7 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { analyzeRequirements, buildDraft, buildTasks, normalizeRequirements, sampleRequirement, MAX_REQUIREMENTS } from "../analysis.js";
-import { extractJsonObject, requirementsFromLlmContent } from "../llm-core.js";
+import { analyzeRequirements, buildDraft, buildTasks, normalizeRequirements, sampleRequirement, MAX_REQUIREMENTS, extractJsonObject, requirementsFromLlmContent } from "../analysis.js";
 import { getHealth, resolveLlmConfig } from "../llm-analyze.mjs";
 import { readFile } from "node:fs/promises";
 

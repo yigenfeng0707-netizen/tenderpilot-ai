@@ -1,5 +1,4 @@
-import { analyzeRequirements, buildDraft, buildTasks, sampleRequirement } from "./analysis.js";
-import { callOpenAICompatible, DEFAULT_LLM_BASE, DEFAULT_LLM_MODEL } from "./llm-core.js";
+import { analyzeRequirements, buildDraft, buildTasks, sampleRequirement, callOpenAICompatible, DEFAULT_LLM_BASE, DEFAULT_LLM_MODEL } from "./analysis.js";
 
 const LLM_SESSION_KEY = "tenderpilot-llm-session";
 
