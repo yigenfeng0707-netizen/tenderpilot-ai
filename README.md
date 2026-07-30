@@ -47,6 +47,14 @@ npm test
 - 草稿不是投标、法律、财务或合规意见；任何事实、报价、资格与承诺均须由负责人审核。
 - 当前仅解析纯文本候选要求，可能遗漏表格、附件、例外条款和非标准表述；生产使用前应补充分段解析、权限控制、审计和企业数据治理。
 
+## 真实用户反馈
+
+欢迎真实试用后留下 2–3 句反馈（好用或不好用均可）。**不购买、不伪造、不刷取互动。**
+
+1. 打开公开 Demo：https://gsym236998-tenderpilot-ai.ms.show/（「加载脱敏样例」→「拆解要求」）。
+2. 提交反馈：https://github.com/yigenfeng0707-netizen/tenderpilot-ai/issues/new?template=user-feedback.md  
+3. 邀请话术、记录表与合规说明见 [`docs/user-feedback.md`](docs/user-feedback.md)。
+
 ## 原创性与来源
 
 - 项目交互、样例文本和代码均为本次赛事开发。

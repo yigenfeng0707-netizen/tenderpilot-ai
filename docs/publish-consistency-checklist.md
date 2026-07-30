@@ -2,21 +2,22 @@
 
 在部署 Demo、发布研习社文章、小红书心得或填写赛事表单前逐项核验。
 
-最近复核：2026-07-26（见 `docs/delivery-notes.md`）。
+最近复核：2026-07-30（见 `docs/delivery-notes.md`）。
 
 | 对象 | 必须一致的内容 | 复核结果 |
 | --- | --- | --- |
 | 项目名称 | `TenderPilot AI` | [x] Demo / Studio / README / 门户记录一致 |
 | 一句话定位 | 面向投标与项目申报运营的材料协作台 | [x] Demo 文案与 README 一致 |
-| 核心功能 | 要求拆解、证据矩阵、风险任务、带来源草稿 | [x] 未登录 Demo 主流程已点验 |
+| 核心功能 | 要求拆解、证据矩阵、风险任务、带来源草稿 | [x] 未登录 Demo 首页关键文案齐全（2026-07-30 HTTP 核验） |
 | 数据边界 | 内置样例；输入不上传服务器；不粘贴未脱敏材料 | [x] Demo「演示模式」提示可见 |
 | 人工审核边界 | 不替代投标、法律、财务或合规意见 | [x] Demo / README 限制说明一致 |
 | Demo 链接 | 魔搭创空间实际公开体验 URL | [x] `https://gsym236998-tenderpilot-ai.ms.show/` 未登录可访问 |
-| 文章链接 | 魔搭研习社实际发布 URL | [x] `https://www.modelscope.cn/learn/434949` 未登录可打开；标题与 Demo/Studio 一致（2026-07-26） |
-| 小红书内容 | 与实际项目直接相关、使用真实截图、无刷量描述 | [x] 用户已确认公开链（含 xsec）：`https://www.xiaohongshu.com/explore/6a579b080000000022014c3c?xsec_token=YAfpZNHX3MR06ldBOodeWLSqMpEaCMjc-PF2pTqaCwpk%3D&xsec_source=pc_creatormng`；稳定 ID `6a579b080000000022014c3c`。自动化未登录 Web 仍 300031，按用户提供 creator 管理链已确认归档 |
-| 额外内容激励选项 | 只有小红书已真实发布才选“是” | [x] 门户 `extra_content_incentive=1`；与用户确认的小红书公开链一致，视为闭环 |
+| 文章链接 | 魔搭研习社实际发布 URL | [x] `https://www.modelscope.cn/learn/434949` 未登录可打开；标题与 Demo/Studio 一致（2026-07-30） |
+| 小红书内容 | 与实际项目直接相关、使用真实截图、无刷量描述 | [x] 用户已确认公开链（含 xsec）；稳定 ID `6a579b080000000022014c3c`。自动化未登录 Web 仍受限（未见可读正文 / 依赖用户侧），按已确认归档 |
+| 额外内容激励选项 | 只有小红书已真实发布才选“是” | [x] 门户 `extra_content_incentive=1`；与用户确认的小红书公开链一致 |
 | 截图/视频 | 仅展示当前实现的功能与内置样例 | [x] 已产出 `demo-output/TenderPilot_AI_demo_3min.mp4`（仅真实功能；约 124s） |
-| 赛事简介 | 不夸大模型能力、效果、用户数或客户案例 | [x] 对外文案与「规则驱动 Demo、无外部 API」一致 |
+| 赛事简介 | 不夸大模型能力、效果、用户数或客户案例 | [x] 对外文案与「规则驱动 Demo、无外部 API」一致；反馈机制见 `docs/user-feedback.md`，无伪造用户数 |
+| 用户反馈入口 | 真实可提交、不刷量 | [x] Issue 模板 + README + Demo 页脚已就绪；**线上 Demo 页脚待重新部署后可见** |
 
 ## 最终提交前
 

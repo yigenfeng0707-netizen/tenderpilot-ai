@@ -1,5 +1,7 @@
 # TenderPilot AI 演示视频流水线
 
+> 清理 `node_modules` 或换机后，需先在 `tools/demo-video` 下执行 `npm install`（再按下方安装 Playwright / ffmpeg）。
+
 基于 Cursor skill `demo-video-factory`：storyboard → Playwright 录屏 → edge-tts → ffmpeg 合成。
 
 引擎脚本不入库，复用本机：

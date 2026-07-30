@@ -7,3 +7,4 @@ dist/
 .gstack/
 demo-output/
 scripts/_tmp_*
+.tmp-inspect/
