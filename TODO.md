@@ -45,7 +45,7 @@
 - [x] 写研习社创作手记草稿：痛点、方案、实现、复现、局限、原创性和推广路径。
 - [x] 发布小红书作品相关心得，仅描述已实现的真实结果。
 - [x] 建立真实用户反馈收集方式；不购买、伪造或刷取互动。（2026-07-30：机制已就绪——`docs/user-feedback.md` + GitHub Issue 模板 + Demo 页脚/README 入口；已补一键邀请包）
-- [ ] 回收真实用户反馈（目标 ≥1–3 条可核验原话；写入 `docs/user-feedback.md` 记录表；0 条伪造）
+- [x] 回收真实用户反馈（目标 ≥1–3 条可核验原话；写入 `docs/user-feedback.md` 记录表；0 条伪造）（2026-07-30：已归档 Issue #1 及评论 1 条；建议继续补第三人细答与创空间赞/评）
 - [x] 双轨拆解：规则加强 + 可选 LLM 增强（`/api/health`、`/api/analyze-enhanced`、会话 Key 面板）；无 Key 必可演示，失败诚实回退
 - [x] 评委 60 秒路径与影响力清单：`docs/judge-60s.md`、`docs/influence-checklist.md`
 

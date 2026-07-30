@@ -16,9 +16,9 @@
 | 资产 | 如何核验 | 最近结果 |
 | --- | --- | --- |
 | Demo | `GET https://gsym236998-tenderpilot-ai.ms.show/` | 2026-07-30 夜：HTTP 200；mode-badge / 增强配置 / 双轨分析脚本与 640/1024 断点已上线 |
-| Studio / 作品 API | 门户 works API：`likes` / `visits` / `comment_count` | 自动化未读到计数；请你在 Studio/门户目视后回填 |
+| Studio / 作品 API | 门户 works API：`likes` / `visits` / `comment_count` | 2026-07-30：`visits≈14423`，`likes=0`，`stars=0`，`comment_count=0` |
 | 研习社 | 未登录打开 `/learn/434949` | （下轮巡检填写） |
-| GitHub Issues | `gh issue list` 用户反馈 | **0** 条（2026-07-30 夜） |
+| GitHub Issues | `gh issue list` 用户反馈 | **1** 条：[#1](https://github.com/yigenfeng0707-netizen/tenderpilot-ai/issues/1)（含评论「在魔搭社区反馈相当好」） |
 
 ## 记录规则
 
