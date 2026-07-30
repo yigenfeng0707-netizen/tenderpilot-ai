@@ -63,12 +63,17 @@
 - 说明文档：`docs/user-feedback.md`（话术、渠道、记录表；**无伪造数据**）
 - GitHub Issue 模板：`.github/ISSUE_TEMPLATE/user-feedback.md`
 - Demo 页脚「反馈」外链 + README「真实用户反馈」小节
-- 状态：**机制已就绪、待回收**；公开 Demo 页脚需创空间重新部署后才线上可见
+- 状态：**机制已就绪、待回收**；公开 Demo 页脚「反馈」已于 **2026-07-30** 创空间重新部署后线上可见
+
+### 创空间部署记录（2026-07-30）
+
+- GitHub `main`：`ad49a3a`（含页脚反馈入口）
+- 操作：登录态 PUT 创空间自有 Git 的 `index.html` / `styles.css`，再 `POST .../openapi/.../deploy`；Status：Creating → **Running**
+- 核验：`https://gsym236998-tenderpilot-ai.ms.show/` 页脚含「反馈」及 GitHub Issue 模板链接
 
 ## 下一步（非自动执行）
 
 1. 邀请 2–3 名真实用户试用 Demo，并回收 Issue / 私聊反馈写入 `docs/user-feedback.md` 记录表。
-2. 将含反馈入口的改动 push 后，按需重新部署创空间，使线上 Demo 页脚「反馈」可见。
-3. 若小红书 `xsec_token` 失效，用创作中心重新复制可访问 URL 回写本文件与 README。
-4. 打榜截止前（约 08.10）再跑一轮未登录冒烟：Demo 主流程、Studio、研习社。
-5. 演示视频流水线见 `demo.storyboard.json` 与 `docs/demo-video.md`；最近成片：`demo-output/TenderPilot_AI_demo_3min.mp4`。
+2. 若小红书 `xsec_token` 失效，用创作中心重新复制可访问 URL 回写本文件与 README。
+3. 打榜截止前（约 08.10）再跑一轮未登录冒烟：Demo 主流程、Studio、研习社。
+4. 演示视频流水线见 `demo.storyboard.json` 与 `docs/demo-video.md`；最近成片：`demo-output/TenderPilot_AI_demo_3min.mp4`。
