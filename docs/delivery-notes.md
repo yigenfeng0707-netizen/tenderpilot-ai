@@ -82,4 +82,19 @@
 1. 邀请 2–3 名真实用户试用 Demo，并回收 Issue / 私聊反馈写入 `docs/user-feedback.md` 记录表。
 2. 若小红书 `xsec_token` 失效，用创作中心重新复制可访问 URL 回写本文件与 README。
 3. 打榜截止前（约 08.10）再跑一轮未登录冒烟：Demo 主流程、Studio、研习社。
-4. 演示视频流水线见 `demo.storyboard.json` 与 `docs/demo-video.md`；最近成片：`demo-output/TenderPilot_AI_demo_3min.mp4`。
+4. 演示视频流水线见 `demo.storyboard.json` 与 `docs/demo-video.md`；提交用本地成片见下方「演示视频提交速记」。
+
+## 演示视频提交速记（可粘贴）
+
+| 项 | 内容 |
+| --- | --- |
+| 本地成片（上传用） | `demo-output/TenderPilot_AI_demo_cinematic_3min.mp4` |
+| 规格 | 约 **182s**，**1920×1080@30**，H.264 + AAC；ASS 字幕已硬烧 |
+| 公开 Demo | https://gsym236998-tenderpilot-ai.ms.show/ |
+| ModelScope Studio | https://www.modelscope.cn/studios/gsym236998/tenderpilot-ai |
+| GitHub | https://github.com/yigenfeng0707-netizen/tenderpilot-ai |
+| 双轨一句 | 默认规则拆解、无需 Key 即可完整演示；配置 OpenAI 兼容 Key 后可选用增强拆解，失败时诚实回退规则路径 |
+| 仓库说明 | `demo-output/` 已 gitignore，成片仅在本机；参赛上传请用上述本地 MP4，勿依赖仓库内二进制 |
+
+流水线细节与重跑步骤：`docs/demo-video.md`。
+

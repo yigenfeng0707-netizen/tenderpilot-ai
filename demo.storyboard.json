@@ -6,51 +6,56 @@
   "baseUrl": "http://127.0.0.1:3000",
   "healthUrl": "http://127.0.0.1:3000",
   "outputDir": "demo-output",
-  "finalMp4": "demo-output/TenderPilot_AI_demo_3min.mp4",
+  "finalMp4": "demo-output/TenderPilot_AI_demo_cinematic_3min.mp4",
   "viewport": { "width": 1920, "height": 1080 },
   "voice": "zh-CN-YunxiNeural",
-  "voiceRate": "-8%",
+  "voiceRate": "-10%",
   "mode": "record",
+  "burnSubtitles": true,
+  "subtitles": true,
+  "crf": 17,
+  "preset": "slow",
+  "audioBitrate": "320k",
   "scenes": [
     {
       "id": "intro",
       "type": "title",
       "title": "TenderPilot AI",
       "subtitle": "面向投标与项目申报运营的材料协作台",
-      "narration": "您好，下面演示 TenderPilot AI。它面向投标与项目申报运营，把一份复杂要求，变成团队看得懂的行动图。",
+      "narration": "您好，下面演示 TenderPilot AI。它面向投标与项目申报运营，把一份复杂要求，先变成团队看得懂、跟得上的行动图，再落到证据与缺口上。",
       "holdSeconds": 5,
       "minDuration": 12
     },
     {
       "id": "h1",
       "type": "browser",
-      "minDuration": 24,
-      "narration": "运营团队准备投标或项目申报材料时，常常要在一份长通知中找截止时间、案例、预算和评分项，再逐个问同事要证明。TenderPilot AI 想先把这些要求变成一张可协作的行动图。",
+      "minDuration": 22,
+      "narration": "运营团队准备投标或项目申报材料时，常常要在一份长通知中找截止时间、案例、预算和评分项，再逐个问同事要证明。TenderPilot AI 想先把这些要求，变成一张可协作的行动图。",
       "actions": [
         { "goto": "/" },
-        { "wait": 5000 },
+        { "wait": 5500 },
         { "scroll": { "y": 200 } },
-        { "wait": 2000 }
+        { "wait": 2500 }
       ]
     },
     {
       "id": "h2",
       "type": "browser",
-      "minDuration": 26,
-      "narration": "这个 Demo 使用脱敏的内置样例，默认不需要 API Key，文本仅在当前浏览器处理。真实使用时不应粘贴未脱敏的投标、客户或个人敏感资料。",
+      "minDuration": 22,
+      "narration": "这个 Demo 使用脱敏的内置样例，默认不需要 API Key，文本仅在当前浏览器处理。真实使用时，不应粘贴未脱敏的投标、客户或个人敏感资料。",
       "actions": [
         { "goto": "/" },
-        { "wait": 1500 },
+        { "wait": 1800 },
         { "click": { "role": "button", "name": "加载脱敏样例" } },
-        { "wait": 4000 },
+        { "wait": 4500 },
         { "scroll": { "y": 280 } },
-        { "wait": 2500 }
+        { "wait": 2800 }
       ]
     },
     {
       "id": "h3",
       "type": "browser",
-      "minDuration": 28,
+      "minDuration": 24,
       "narration": "一次拆解后，系统将截止节点、资质与案例、方案交付、预算报价和评分项分别列出。每一项都有原文引用和优先级，所以团队能先看到最容易遗漏、最影响交付的内容。",
       "actions": [
         { "goto": "/" },
@@ -59,15 +64,23 @@
         { "wait": 1000 },
         { "click": { "role": "button", "name": "拆解要求" } },
         { "waitFor": { "text": "候选要求清单", "timeout": 15000 } },
-        { "wait": 2500 },
+        { "wait": 2800 },
         { "scroll": { "y": 420 } },
-        { "wait": 3500 }
+        { "wait": 4000 }
       ]
+    },
+    {
+      "id": "chart",
+      "type": "image",
+      "path": "assets/evidence-matrix-chart.png",
+      "isChart": true,
+      "minDuration": 20,
+      "narration": "证据矩阵把每条要求摊开：类型、摘要、当前证据、负责人和优先级一目了然。高优先级缺口会先被标出，团队不必再在长文里来回翻找。"
     },
     {
       "id": "h4",
       "type": "browser",
-      "minDuration": 26,
+      "minDuration": 22,
       "narration": "接下来，每项要求都有当前证据、负责人和状态。缺少案例证明、负责人资质或报价盖章时，团队不会只看到一段文字，而是直接得到可跟进的风险任务。",
       "actions": [
         { "goto": "/" },
@@ -76,19 +89,19 @@
         { "wait": 800 },
         { "click": { "role": "button", "name": "拆解要求" } },
         { "waitFor": { "text": "证据矩阵", "timeout": 15000 } },
-        { "wait": 1500 },
+        { "wait": 1600 },
         { "scroll": { "y": 700 } },
-        { "wait": 2500 },
+        { "wait": 2800 },
         { "scroll": { "y": 420 } },
-        { "wait": 2000 },
+        { "wait": 2200 },
         { "click": { "role": "checkbox", "namePattern": "核验并补齐：截止节点" } },
-        { "wait": 3000 }
+        { "wait": 3200 }
       ]
     },
     {
       "id": "h5",
       "type": "browser",
-      "minDuration": 24,
+      "minDuration": 20,
       "narration": "最后的草稿只引用输入中已经抽取的要求。没有证据的内容会被保留为待确认，而不是被包装成事实。它不是投标、法律、财务或合规意见，最终材料仍必须由负责人审核。",
       "actions": [
         { "goto": "/" },
@@ -97,29 +110,29 @@
         { "wait": 800 },
         { "click": { "role": "button", "name": "拆解要求" } },
         { "waitFor": { "text": "受约束内容", "timeout": 15000 } },
-        { "wait": 1200 },
+        { "wait": 1400 },
         { "scroll": { "y": 1100 } },
-        { "wait": 3000 },
+        { "wait": 3200 },
         { "click": { "role": "button", "name": "复制草稿" } },
-        { "wait": 2500 }
+        { "wait": 2800 }
       ]
     },
     {
       "id": "h6",
       "type": "browser",
-      "minDuration": 26,
-      "narration": "TenderPilot AI 的重点不是替人做最终承诺，而是先让证据、缺口和协作关系变得可见，帮助运营团队更稳地完成材料准备。它是规则驱动的可复现 Demo，不调用外部大模型 API。",
+      "minDuration": 24,
+      "narration": "TenderPilot AI 的重点不是替人做最终承诺，而是先让证据、缺口和协作关系变得可见。默认走规则拆解，无需 API Key 即可完整演示；若配置了 OpenAI 兼容接口与 Key，还可选用增强拆解，失败时会诚实回退到规则路径。",
       "actions": [
         { "goto": "/" },
-        { "wait": 1000 },
+        { "wait": 1200 },
         { "click": { "role": "button", "name": "加载脱敏样例" } },
         { "wait": 800 },
         { "click": { "role": "button", "name": "拆解要求" } },
-        { "wait": 1500 },
+        { "wait": 1800 },
         { "scroll": { "y": 1600 } },
-        { "wait": 3500 },
+        { "wait": 4000 },
         { "scroll": { "y": 400 } },
-        { "wait": 2500 }
+        { "wait": 2800 }
       ]
     },
     {
@@ -127,7 +140,7 @@
       "type": "title",
       "title": "感谢观看",
       "subtitle": "Demo：gsym236998-tenderpilot-ai.ms.show",
-      "narration": "以上是 TenderPilot AI 演示。公开体验链接已部署在魔搭创空间，欢迎试用内置脱敏样例。",
+      "narration": "以上是 TenderPilot AI 演示。公开体验链接已部署在魔搭创空间，欢迎试用内置脱敏样例，也可按需配置增强拆解。",
       "holdSeconds": 5,
       "minDuration": 12
     }
